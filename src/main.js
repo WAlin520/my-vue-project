@@ -41,6 +41,7 @@ Vue.use(vueResource)
 Vue.http.options.root = 'http://www.liulongbin.top:3005'
 Vue.http.options.emulateJSON = true
 
+
 //导入格式化时间的插件
 import moment from 'moment'
 //定义全局的过滤器，用于时间
@@ -54,6 +55,52 @@ import VuePreview from 'vue-preview'
 Vue.use(VuePreview)
 
 
+//这里要从本地读取cart
+var cartList = JSON.parse(localStorage.getItem('cart') || "[]");
+// var cartList = JSON.parse("[]");
+
+
+//导入vuex模块
+import Vuex from 'vuex'
+Vue.use(Vuex)
+const store = new Vuex.Store({
+  state:{
+    cart: cartList,
+  },
+  mutations:{
+
+    addtoCart(state, goods){  //这里的参数第一个默认是state
+      //要分成id之前就已经存在的和之前不存在的
+      var flag = false;
+      state.cart.some( item => {
+        if(item.id === goods.id){
+          item.count += parseInt(goods.count);
+          flag = true;
+          return true;
+        }
+      })
+      if( !flag ){
+        state.cart.push(goods);
+      }
+      console.log(state.cart);
+      localStorage.setItem('cart', JSON.stringify(state.cart));
+    }
+  },
+  getters:{
+    getAllCount(state){
+      var totalNum = 0;
+      state.cart.forEach( item =>{
+      totalNum += item.count;
+      })
+      return totalNum;
+    //   setInterval(
+    //     () => {return totalNum},1000
+    //  )
+    }
+  }
+})
+
+
 import './lib/CSS/global.css'
 
 // import 'viewerjs/dist/viewer.css'
@@ -64,6 +111,7 @@ Vue.config.productionTip = false
 new Vue({
   el: '#app',
   router,
+  store,  //vuex仓储要挂载一下
   components: {
     App
   },

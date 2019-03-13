@@ -2,11 +2,13 @@
   <div class="home">
 
     <!-- 这是轮播图的 -->
-    <mt-swipe :auto="4000">
+    <swiper :lunbotuList="lunbotuList" :full="true"></swiper>
+    <!-- 底下不用了改成子组件 -->
+       <!-- <mt-swipe :auto="4000">
       <mt-swipe-item v-for="item in lunbotuList" :key="item.id" >
         <img :src="item.img" alt="">
       </mt-swipe-item>
-    </mt-swipe>
+    </mt-swipe> -->
 
     <!--九宫格到六宫格的改造  -->
     <ul class="mui-table-view mui-grid-view mui-grid-9">
@@ -22,12 +24,18 @@
                 <div class="mui-media-body">图片分享</div>
           </router-link>
         </li>
-        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+          <router-link to="/home/goodslist">
                 <img src="@/assets/image/menu3.png" alt="">
-                <div class="mui-media-body">商品购买</div></a></li>
-        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
+                <div class="mui-media-body">商品购买</div>
+          </router-link>
+        </li>
+        <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3">
+          <router-link to="/home/feedback">
                 <img src="@/assets/image/menu4.png" alt="">
-                <div class="mui-media-body">留言反馈</div></a></li>
+                <div class="mui-media-body">留言反馈</div>
+          </router-link>
+        </li>
         <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="#">
                 <img src="@/assets/image/menu5.png" alt="">
                 <div class="mui-media-body">视频专区</div></a></li>
@@ -44,6 +52,8 @@
 
 import { Toast } from 'mint-ui'
 // Vue.component( Toast.name, Toast )这里面不需要注册，根据官网
+//导入轮播图子组件
+import swiper from '../subcomponent/swiper'
 
 export default {
   name: 'home',
@@ -69,6 +79,10 @@ export default {
   },
   created(){
     this.getLunbotu();
+  },
+  //子组件注册
+  components:{
+    swiper
   }
 }
 
@@ -78,9 +92,9 @@ export default {
 <style lang="less" scoped>
 
 //轮播图整个container的样式
-.mint-swipe{
-  height: 150px;
-}
+// .mint-swipe{
+//   height: 150px;
+// }
 
 /* 样式一 */
  /* .mint-swipe-item:nth-child(1) {
@@ -103,11 +117,11 @@ export default {
 //   }
 
  //轮播图图片样式
- img{ 
-   width:100%;
-   weight:100%
+//  img{ 
+//    width:100%;
+//    weight:100%
   
- }
+//  }
 
 //九宫格整个大格的样式
  .mui-grid-view.mui-grid-9{

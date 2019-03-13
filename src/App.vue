@@ -26,7 +26,8 @@
             <span class="mui-tab-label">会员</span>
         </router-link>
         <router-link class="mui-tab-item-al" to="/cart">
-						<span class="mui-icon mui-icon-extra mui-icon-extra-cart"><span class="mui-badge">9</span></span>
+						<span class="mui-icon mui-icon-extra mui-icon-extra-cart">
+              <span class="mui-badge" id="badge"> {{ this.$store.getters.getAllCount }}</span></span>
             <span class="mui-tab-label">购物车</span>
         </router-link>
         <router-link class="mui-tab-item-al" to="/search">
@@ -44,6 +45,17 @@
 
 export default {
   name: 'App',
+  data(){
+    return{
+      badge: this.$store.getters.getAllCount,
+    }
+  },
+  // watch:{
+  //   "this.$store.getters.getAllCount": function(new_value){
+  //     setInterval( 
+  //        () => {return new_value},500
+  //     )
+  // }}
 }
 </script>
 
@@ -82,7 +94,7 @@ export default {
 
 
 .mui-bar{
-  z-index: 99;
+  z-index: 98;
 }
 
 

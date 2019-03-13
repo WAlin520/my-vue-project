@@ -1,24 +1,14 @@
 <template>
+   
     <div>
-
         <!-- 发表评论 -->
-        <button class="mui-btn  commentBtn" @click="show = true">
-        <!-- <button class="mui-btn  mui-btn-block mui-btn-outlined commentBtn" @click="show = true"> -->
-            欢迎发表你的观点
-        </button>
-        <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom mui-active commenttabel" v-show="show" >
-			
-            <div class="mui-table-view-div">
-                <span class="mui-table-view-span"  @click="show = false">取消</span>
-                <span class="mui-table-view-span" @click="postComment">发布</span>
-			</div>
+             <h3>评论区</h3>
+             
 
-            <textarea placeholder="欢迎发表您的观点" v-model="newcomment"></textarea>
-		</div>
-
-        <hr style="border-weight:800">
-
-        <h3>评论区</h3>
+            <textarea placeholder="请输入要BB的内容（最多吐槽120字）" maxlength="120" v-model="newcomment"></textarea>
+            <mt-button type="primary" size="large" @click="postComment">发表评论</mt-button>
+         <!-- <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom mui-active commenttabel" v-show="show" > -->
+            <hr>			
                 <!-- 评论列表 -->   
         <div class="comment-container">  
             <div class="commentList" v-for="(item, i) in commentList" :key="item.add_time">
@@ -35,9 +25,6 @@
                     <p class="commentList-contentBox">{{item.content}}</p>
                 </div>
             </div>
-
-            <!-- 加载更多的按钮，这里过渡需要设置key值当有相同标签名的元素切换时，需要通过 key 特性设置唯一的值
-            来标记以让 Vue 区分它们，否则 Vue 为了效率只会替换相同标签内部的内容。 -->
             <transition mode="out-in">
             <button type="button" class="mui-btn mui-btn-outlined mui-btn-primary" 
             style='width:100%' v-if="more_show" @click="getmoreInfo" :key="'more'">
@@ -48,22 +35,19 @@
                 </span>&nbsp;<span>Loading...</span>
                 </button>
             </transition>
+
         </div>  
-        <!-- 当打开评论页面是整个页面变暗 -->
-        <div class="mui-backdrop mui-active mui-backdrop-action" v-show="show"></div>
-
-
 
     </div>
 </template>
 
 <script>
 
+import comment from '../subcomponent/comment'
 import { Toast } from 'mint-ui'
 
-
 export default {
-    name:'comment',
+    name:'goodsComment',
     data(){
         return{
             show: false,
@@ -119,6 +103,7 @@ export default {
                     var cmt = { user_name:'匿名用户', add_time: Date.now(), content: this.newcomment };
                     this.commentList.unshift(cmt);
                     this.show = false;
+                    this.newcomment = "";
                 }else{
                     Toast('发表评论失败');
                 }
@@ -130,16 +115,13 @@ export default {
 
 }
 
-
-
 </script>
 
 <style lang="less" scoped> 
 
-//整个评论区向上挪，因为底下选项栏
-.comment-container{
-    padding-bottom: 40px;
-}
+// .comment-container{
+//     padding-bottom: 40px;
+// }
 
 //发表按钮样式
 .commentBtn{
@@ -158,7 +140,7 @@ export default {
 
 //观点：
 h3{
-    margin-top:10px;
+    margin-top:20px;
     margin-bottom: 15px;
     margin-left:10px;
     font-size: 18px;
@@ -213,51 +195,12 @@ h3{
 }
 
 
-
-//输入评论框中的样式
-.commenttabel{
-    margin-bottom: 0px;
-     background-color:white;
-    //  width:100%;
-     border-radius: 3px;
-     padding-top: 5px;
-    //  padding-bottom:20px;
-}
-.mui-table-view{
-    display: flex;
-    padding: 5px 5px;
-    }
- .mui-table-view-div{
-    display: flex;
-    justify-content: space-between;
-    margin: 8px 10px;
-    // background-color:#eae8e8;
-    .mui-table-view-span{
-    padding: 0 7px;
-    font-size: 16px;
-    font-weight: 500;
-    color: rgb(91, 91, 92);
-} 
-}
-textarea{
-    height:40px;
-    background-color:#f0eeee;
-    margin:0 10px;
-    margin-bottom: 10px;
-    margin-left: 5px;
-    margin-right: 5px;
-    // margin: 5px 20px 5px 5px ;
-    font-size:14px;
-    line-height: 40px;  
-}
-
-
       //更改placeholder样式
- textarea::-webkit-input-placeholder{
-    font-size: 15px;
-    line-height: 40px;
-    vertical-align: middle;  
-}
+//  textarea::-webkit-input-placeholder{
+//     font-size: 15px;
+//     line-height: 40px;
+//     vertical-align: middle;  
+// }
 .v-enter, .v-leave-to{
     opacity: 0;
     position:relative;
@@ -265,6 +208,12 @@ textarea{
 
 .v-enter-active, .v-leave-active{
     transition: opacity 0.1s;
+}
+
+textarea {
+  font-size: 15px;
+  margin: 0;
+  margin-bottom: 5px;
 }
 
 
