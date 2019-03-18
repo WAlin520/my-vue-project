@@ -1,11 +1,11 @@
 {
-  "name": "mylastproject",
+  "name": "my-vue-project",
   "version": "1.0.0",
   "description": "A Vue.js project",
   "author": "",
   "private": true,
   "scripts": {
-    "dev": "webpack-dev-server --open chrome --port 8888 --inline --host 192.168.1.175 --progress --config build/webpack.dev.conf.js",
+    "dev": "webpack-dev-server --open chrome --port 8888 --inline  --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
     "lint": "eslint --ext .js,.vue src",
     "build": "node build/build.js"
@@ -82,5 +82,16 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 8"
-  ]
+  ],
+  "main": ".eslintrc.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/WAlin520/my-vue-project.git"
+  },
+  "keywords": [],
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/WAlin520/my-vue-project/issues"
+  },
+  "homepage": "https://github.com/WAlin520/my-vue-project#readme"
 }

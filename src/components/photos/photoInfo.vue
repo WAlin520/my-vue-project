@@ -66,14 +66,14 @@ export default {
                         element.msrc = element.src;
                     });
                     this.ThumbPhotoList = result.body.message;
-                    console.log(this.ThumbPhotoList); 
+                    // console.log(this.ThumbPhotoList); 
                     }
                   
                 })
         },
         //vue-preview官网
         handleClose () {
-        console.log('close event')
+        // console.log('close event')
       }
     },
     components:{

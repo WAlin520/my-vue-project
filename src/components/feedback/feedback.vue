@@ -266,7 +266,7 @@ export default {
 						var data = JSON.parse(upload.responseText);
 						//上传成功，重置表单
 						if (data.ret === 0 && data.desc === 'Success') {
-		//					mui.toast('反馈成功~')
+		//					mui.toast('反馈成功~') 
 							console.log("upload success");
 		//					feedback.clearForm();
 						}

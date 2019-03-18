@@ -64,7 +64,7 @@ export default {
             this.$http.get('api/getimgcategory').then( result => {
                 if(result.body.status === 0){
                      result.body.message.unshift({title:"全部", id:0});
-                     console.log(result.body.message);
+                    //  console.log(result.body.message);
                      this.Categorys = result.body.message;
                 } else {
                     Toast('图片分类加载失败！');

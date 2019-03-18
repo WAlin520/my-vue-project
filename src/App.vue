@@ -1,8 +1,13 @@
 <template>
+
   <div id="app" class="app-container">
 		
 		<!-- 头部导航栏-->
-    <mt-header fixed title="黑马程序猿·Vue项目"></mt-header>
+    <mt-header fixed title="my-personal-vue-project">
+      <span slot="left" @click="goBack()">
+        <mt-button icon="back" v-show="flag">返回</mt-button>
+      </span>
+    </mt-header>
 		<!-- <img src="./assets/img/menu1.png"> -->
 
 
@@ -42,20 +47,31 @@
 
 <script>
 
-
 export default {
   name: 'App',
   data(){
     return{
-      badge: this.$store.getters.getAllCount,
+      flag: false,
     }
   },
-  // watch:{
-  //   "this.$store.getters.getAllCount": function(new_value){
-  //     setInterval( 
-  //        () => {return new_value},500
-  //     )
-  // }}
+  created(){
+    this.flag = this.$route.path === "/home"? false:true;
+  },
+  methods:{
+    goBack(){
+      this.$router.go(-1);
+    }
+  },
+  watch:{
+    //监听URL地址，如果是home就隐藏返回键
+    "$route.path": function(newVal){
+      if(newVal === "/home"){
+        this.flag = false;
+      } else {
+        this.flag = true;
+      }
+    }
+  }
 }
 </script>
 

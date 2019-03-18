@@ -74,7 +74,7 @@ export default {
             this.$http.get('api/getgoods?pageindex='+this.pageIndex).then(
                 result => {
                     if(result.body.status === 0){
-                        console.log(result.body.message);   
+                        // console.log(result.body.message);   
                         this.goodsList = this.goodsList.concat(result.body.message);
                         this.more_show = true;
 

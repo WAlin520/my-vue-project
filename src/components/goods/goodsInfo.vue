@@ -135,7 +135,7 @@ export default {
         },
         addCart(){
             this.ballShow = !this.ballShow;
-            console.log(this.cartNumber);
+            // console.log(this.cartNumber);
             var goods = { id: this.id, price: this.goodsInfo.sell_price, count: this.cartNumber, selected: true };
             this.$store.commit("addtoCart", goods);
         },
@@ -164,7 +164,7 @@ export default {
             el.offsetWidth;
             el.style.transform = `translate( ${xDist}px, ${yDist}px )`;
              // 贝塞尔曲线在线生成器： http://cubic-bezier.com/#.46,-0.4,1,.49
-            el.style.transition = "all 0.3s cubic-bezier(.46,-0.4,1,.49)";
+            el.style.transition = "all 0.5s cubic-bezier(.46,-0.4,1,.49)";
             done();
         },
         afterEnter(el){

@@ -58,44 +58,104 @@ Vue.use(VuePreview)
 //这里要从本地读取cart
 var cartList = JSON.parse(localStorage.getItem('cart') || "[]");
 // var cartList = JSON.parse("[]");
+// localStorage.setItem('cart', JSON.stringify(cartList));
+
 
 
 //导入vuex模块
 import Vuex from 'vuex'
 Vue.use(Vuex)
 const store = new Vuex.Store({
-  state:{
+  state: {
     cart: cartList,
   },
-  mutations:{
-
+  mutations: {
     addtoCart(state, goods){  //这里的参数第一个默认是state
       //要分成id之前就已经存在的和之前不存在的
       var flag = false;
-      state.cart.some( item => {
+      state.cart.some( (item,i) => {
         if(item.id === goods.id){
-          item.count += parseInt(goods.count);
+          item.count = parseInt(item.count) + parseInt(goods.count);
+          item.selected = true;
+          // var newitem = state.cart.splice(i,1);
+          // state.cart.unshift(newitem);
           flag = true;
           return true;
         }
       })
-      if( !flag ){
+      if( !flag ) {
         state.cart.push(goods);
       }
       console.log(state.cart);
       localStorage.setItem('cart', JSON.stringify(state.cart));
-    }
+    },
+    updateGoodsInfo(state, goodsInfo){   //在购物车修改购买商品数量
+      state.cart.some(item => {
+        if(item.id == goodsInfo.id){
+          item.count = parseInt(goodsInfo.count);
+          return true; //这句不能忘啊，找到就跳出来
+        }
+      })
+      //修改完商品数量要将最新的购物车数据保存到本地中
+      localStorage.setItem('cart', JSON.stringify(state.cart));
+    },
+    delFormCart(state, id) {
+      state.cart.some( (item, i) => {
+        if (item.id == id) {
+          state.cart.splice(i, 1);
+          return true;
+        }
+      })  
+      //删除完商品数量要将最新的购物车数据保存到本地中
+      localStorage.setItem('cart', JSON.stringify(state.cart));
+    },
+    updateGoodsSelected(state, goodsInfo){   //在购物车修改购买商品是否选择
+      state.cart.some(item => {
+        if(item.id == goodsInfo.id){
+          item.selected = goodsInfo.selected;
+          return true; //这句不能忘啊，找到就跳出来
+        }
+      })
+      //修改完商品数量要将最新的购物车数据保存到本地中
+      localStorage.setItem('cart', JSON.stringify(state.cart));
+    },
   },
-  getters:{
-    getAllCount(state){
+  getters: {
+    getAllCount(state) {
       var totalNum = 0;
-      state.cart.forEach( item =>{
+      state.cart.forEach( item => {
       totalNum += item.count;
       })
       return totalNum;
     //   setInterval(
     //     () => {return totalNum},1000
     //  )
+    },
+
+    getGoodsCount(state) {
+        var o = {} ;
+        state.cart.forEach(item => {
+          o[item.id] = item.count;
+        })
+        return o;
+    },
+    getGoodsSelected(state) {
+      var o = {} ;
+      state.cart.forEach(item => {
+        o[item.id] = item.selected;
+      })
+      return o;
+    },
+    //计算所选商品的总价
+    getAllCountAmount(state){
+      var o = { count:0, amount:0 };
+      state.cart.forEach( item => {
+        if(item.selected){
+        o.count = o.count + parseInt(item.count);
+        o.amount = o.amount + parseInt(item.price) * parseInt(item.count);
+        }
+      })
+      return o;
     }
   }
 })
