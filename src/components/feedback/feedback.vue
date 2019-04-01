@@ -63,38 +63,20 @@
 
 import mui from '../../lib/mui/js/mui.min.js'
 import  '../../lib/mui/css/feedback.css'
-// import '../../lib/mui/js/feedback.js'
+import {Toast} from 'mint-ui'
 
 
 
 export default {
     name: "feedback",
     mounted(){
-        // mui.init();
-		// mui('.mui-scroll-wrapper').scroll(); 
 		this.muiFeedback();
-	// 	mui('.mui-popover').on('tap','li',function(e){
-	// 		document.getElementById("question").value = document.getElementById("question").value + this.children[0].innerHTML;
-	// 		mui('.mui-popover').popover('toggle')
-	// 	});
-	// 	//应用评分 
-	// 	mui('.icons').on('tap','i',function(){
-	//   	var index = parseInt(this.getAttribute("data-index"));
-	//   	var parent = this.parentNode;
-	//   	var children = parent.children;
-	//   	if(this.classList.contains("mui-icon-star")){
-	//   		for(var i=0;i<index;i++){
-  	// 			children[i].classList.remove('mui-icon-star');
-  	// 			children[i].classList.add('mui-icon-star-filled');
-	//   		}
-	//   	}else{
-	//   		for (var i = index; i < 5; i++) {
-	//   			children[i].classList.add('mui-icon-star')
-	//   			children[i].classList.remove('mui-icon-star-filled')
-	//   		}
-	//   	}
-	//   	starIndex = index;
-	// });
+		
+		mui.plusReady(() => {
+			this.muiFeedback();
+					// 在这里调用plus api
+				});
+
 	},
 	methods:{
 		muiFeedback(){
@@ -155,87 +137,7 @@ export default {
 				feedback.files.push({name:"images"+index,path:path,id:"img-"+index});
 				index++;
 			};
-
-
-			/**
-			* 初始化图片域占位
-			*/
-		/*	feedback.newPlaceholder = function() {
-				var fileInputArray = feedback.getFileInputArray();
-				if (fileInputArray &&
-					fileInputArray.length > 0 &&
-					fileInputArray[fileInputArray.length - 1].parentNode.classList.contains('space')) {
-					return;
-				};
-				imageIndexIdNum++;
-				var placeholder = document.createElement('div');
-				placeholder.setAttribute('class', 'image-item space');
-				var up = document.createElement("div");
-				up.setAttribute('class','image-up')
-				//删除图片
-				var closeButton = document.createElement('div');
-				closeButton.setAttribute('class', 'image-close');
-				closeButton.innerHTML = 'X';
-				closeButton.id = "img-"+index;
-				//小X的点击事件
-				closeButton.addEventListener('tap', function(event) {
-					setTimeout(function() {
-						for(var temp=0;temp<feedback.files.length;temp++){
-							if(feedback.files[temp].id==closeButton.id){
-								feedback.files.splice(temp,1);
-							}
-						}
-						feedback.imageList.removeChild(placeholder);
-					}, 0);
-					return false;
-				}, false);
-				
-			//
-			var fileInput = document.createElement('div');
-			fileInput.setAttribute('class', 'file');
-			fileInput.setAttribute('id', 'image-' + imageIndexIdNum);
-			fileInput.addEventListener('tap', function(event) {
-				var self = this;
-				var index = (this.id).substr(-1);
-				
-				plus.gallery.pick(function(e) {
-	//				console.log("event:"+e);
-					var name = e.substr(e.lastIndexOf('/') + 1);
-					console.log("name:"+name);
-						
-					plus.zip.compressImage({
-						src: e,
-						dst: '_doc/' + name,
-						overwrite: true,
-						quality: 50
-					}, function(zip) {
-						size += zip.size  
-						console.log("filesize:"+zip.size+",totalsize:"+size);
-						if (size > (10*1024*1024)) {
-							return mui.toast('文件超大,请重新选择~');
-						}
-						if (!self.parentNode.classList.contains('space')) { //已有图片
-							feedback.files.splice(index-1,1,{name:"images"+index,path:e});
-						} else { //加号
-							placeholder.classList.remove('space');
-							feedback.addFile(zip.target);
-							feedback.newPlaceholder();
-						}
-						up.classList.remove('image-up');
-						placeholder.style.backgroundImage = 'url(' + zip.target + ')';
-					}, function(zipe) {
-						mui.toast('压缩失败！')
-					});	
-					}, function(e) {
-						mui.toast(e.message);
-					},{});
-				}, false);
-				placeholder.appendChild(closeButton);
-				placeholder.appendChild(up);
-				placeholder.appendChild(fileInput);
-				feedback.imageList.appendChild(placeholder);
-			};
-			feedback.newPlaceholder();*/
+			
 			feedback.submitBtn.addEventListener('tap', function(event) {
 				if (feedback.question.value == '' ||
 					(feedback.contact.value != '' &&
@@ -297,7 +199,7 @@ export default {
 					feedback.clearForm();
 					mui.back();
 				});
-		//		plus.nativeUI.showWaiting();
+				plus.nativeUI.showWaiting();
 			};
 			
 

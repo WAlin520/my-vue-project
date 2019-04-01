@@ -13,6 +13,8 @@ import goodsInfo from '@/components/goods/goodsInfo'
 import goodsComment from '@/components/goods/goodsComment'
 import goodsDesc from '@/components/goods/goodsDesc'
 import feedback from '@/components/feedback/feedback'
+import contact from '@/components/contact/contact'
+
 
 
 Vue.use(Router)
@@ -43,6 +45,7 @@ export default new Router({
     // { path: '/home/goodsdesc/:id', name:"goodsdesc", component: goodsDesc },
     // { path: '/home/goodscomment/:id', name:"goodscomment", component: goodsComment },
     { path: '/home/feedback', component: feedback},
+    { path: '/home/contact', component: contact},
   ],
   linkActiveClass: "mui-active"  //覆盖默认的路由高亮的类
 })

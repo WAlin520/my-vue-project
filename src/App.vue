@@ -3,11 +3,20 @@
   <div id="app" class="app-container">
 		
 		<!-- 头部导航栏-->
+    
     <mt-header fixed title="my-personal-vue-project">
       <span slot="left" @click="goBack()">
         <mt-button icon="back" v-show="flag">返回</mt-button>
       </span>
     </mt-header>
+
+    <!-- 导航栏的另一种样式，这里的背景颜色改不了只能跟底下的选项栏一样，不太好用 -->
+    <!-- <header id="header" class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">My VUE Project</h1>
+      <span class=" mui-icon mui-icon-left-nav" v-show="flag" @click="goBack()"></span>
+		</header> -->
+
+    
 		<!-- <img src="./assets/img/menu1.png"> -->
 
 

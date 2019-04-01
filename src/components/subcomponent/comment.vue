@@ -9,7 +9,7 @@
         <div id="picture" class="mui-popover mui-popover-action mui-popover-bottom mui-active commenttabel" v-show="show" >
 			
             <div class="mui-table-view-div">
-                <span class="mui-table-view-span"  @click="show = false">取消</span>
+                <span class="mui-table-view-span"  @click="quitComment">取消</span>
                 <span class="mui-table-view-span" @click="postComment">发布</span>
 			</div>
 
@@ -111,21 +111,25 @@ export default {
             //2.提交给服务器的数据对象 { content:this.msg }
             // 3.定义提交的时候表单中数据的格式 { emulateJSON:true }，这个可以全局定义
              // this.$http.post( 'api/postcomment/' + $route.params.id  )//可以直接在路由上找id也可以通过父组件传进来id
-            this.$http.post( 'api/postcomment/' + this.id, { content:this.newcomment.trim()  })
-            .then(function(result){
-                if(result.body.status === 0){
-                    Toast('发表评论成功');
-                    //拼接出一个评论对象
-                    var cmt = { user_name:'匿名用户', add_time: Date.now(), content: this.newcomment };
-                    this.commentList.unshift(cmt);
-                    this.show = false;
-                }else{
-                    Toast('发表评论失败');
-                }
-            })
-
-             }
-        }
+                this.$http.post( 'api/postcomment/' + this.id, { content:this.newcomment.trim()  })
+                .then(function(result){
+                    if(result.body.status === 0){
+                        Toast('发表评论成功');
+                        //拼接出一个评论对象
+                        var cmt = { user_name:'匿名用户', add_time: Date.now(), content: this.newcomment };
+                        this.commentList.unshift(cmt);
+                        this.show = false;
+                         this.newcomment = "";
+                    }else{
+                        Toast('发表评论失败');
+                    }
+                })
+            }
+        },
+        quitComment(){
+            this.show = false;
+            this.newcomment = "";
+            }
     },
 
 }
@@ -215,9 +219,18 @@ h3{
 
 
 //输入评论框中的样式
+.mui-popover{
+    height: 90px;
+    // z-index: 100;
+    // background-color: white;
+}
+.mui-popover.mui-popover-action{
+    // width: 98%;
+}
+
 .commenttabel{
     margin-bottom: 0px;
-     background-color:white;
+     background-color:white !important;
     //  width:100%;
      border-radius: 3px;
      padding-top: 5px;
@@ -225,7 +238,7 @@ h3{
 }
 .mui-table-view{
     display: flex;
-    padding: 5px 5px;
+    // padding: 5px 5px;
     }
  .mui-table-view-div{
     display: flex;
@@ -240,6 +253,7 @@ h3{
 } 
 }
 textarea{
+    width: 97.5%;
     height:40px;
     background-color:#f0eeee;
     margin:0 10px;
@@ -248,14 +262,14 @@ textarea{
     margin-right: 5px;
     // margin: 5px 20px 5px 5px ;
     font-size:14px;
-    line-height: 40px;  
+    line-height: 30px;  
 }
 
 
       //更改placeholder样式
  textarea::-webkit-input-placeholder{
     font-size: 15px;
-    line-height: 40px;
+    line-height: 25px;
     vertical-align: middle;  
 }
 .v-enter, .v-leave-to{
