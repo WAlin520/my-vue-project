@@ -19,6 +19,7 @@ npm run build
 npm run build --report
 ```
 
-[视频](./预览成品.mp4)
+
+![image](./效果预览/微信图片_20190401145536.jpg)
 
 
