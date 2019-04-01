@@ -20,13 +20,13 @@ npm run build --report
 ```
 ## 预览
 ### 首页中的新闻资讯板块  
-<image src="./效果预览/新闻资讯.gif" style="width:40%"></image>
+<image src="./效果预览/新闻资讯.gif" style="width:200px"></image>
 ### 首页中的图片分享板块  
 <image src="./效果预览/图片分享.gif" style="width:40%"></image>
 
 ### 首页中的商品购买板块  
-<image src="./效果预览/商品购买1.gif" style="width:40%"></image>
-<image src="./效果预览/商品购买2.gif" style="width:40%"></image>
+<image src="./效果预览/商品购买1.gif" style="width:200px"></image>
+<image src="./效果预览/商品购买2.gif" style="width:200px"></image>
 
 ### 购物车  
 <image src="./效果预览/商品购买3.gif" style="width:40%"></image>
