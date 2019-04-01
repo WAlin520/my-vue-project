@@ -20,6 +20,13 @@ npm run build --report
 ```
 
 
-![image](./效果预览/微信图片_20190401145536.jpg)
+<image src="./效果预览/主页.png" style="width:300px">主页</image>
+<image src="./效果预览/新闻列表.png" style="width:300px"></image>
+<image src="./效果预览/新闻详情.png" style="width:300px"></image>
+<image src="./效果预览/新闻评论区" style="width:300px"></image>
+<image src="./效果预览/图片分享 (2).gif" style="width:300px"></image>
+
+
+
 
 
