@@ -100,7 +100,7 @@ export default {
         this.getGoodsInfo();
     },
     methods:{
-        getGoodsLunbotu(){
+        /* getGoodsLunbotu(){
             this.$http.get('api/getthumimages/'+ this.id).then(
                 result => {
                     if (result.body.status === 0) {
@@ -112,8 +112,19 @@ export default {
                         this.photolunbotuList = result.body.message;
                     }
             })
+        }, */
+        async getGoodsLunbotu(){
+            const {data} = await this.$http.get('api/getthumimages/'+ this.id);
+            if (data.status === 0) {
+                // console.log(result.body.message);
+                data.message.forEach(element => {
+                    element.img = element.src;
+                });
+                //先循环轮播图数组的每一项，为item添加img属性，因为轮播图组件中，传入图片的URL是用的item.img
+                this.photolunbotuList = data.message;
+            }
         },
-        getGoodsInfo(){
+       /*  getGoodsInfo(){
             //获取商品的信息
             this.$http.get('api/goods/getinfo/'+this.id).then(
                 result=>{
@@ -122,7 +133,15 @@ export default {
                     // console.log(this.goodsInfo);
                 }
             })  
+        }, */
+        async getGoodsInfo(){
+            //获取商品的信息
+            const{data} = await this.$http.get('api/goods/getinfo/'+this.id);
+            if (data.status === 0) {
+                this.goodsInfo = data.message[0];
+            } 
         },
+
         goDesc(id){
     // 点击按钮，跳转到 商品的描述页面
       // 注意： 在 this 这个组件身上，有 this.$route 和 this.$router

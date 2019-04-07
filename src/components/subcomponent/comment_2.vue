@@ -64,7 +64,7 @@ export default {
     },
     methods:{
         //获取评论列表
-        getNewsInfo(){
+        /* getNewsInfo(){
             this.$http.get('api/getcomments/' + this.id + "?pageindex=" + this.pageIndex )
             .then( result => {
                 if( result.body.status === 0 ){
@@ -76,7 +76,19 @@ export default {
                     // this.more_show = true;
                 }
             })
+        }, */
+        async getNewsInfo(){
+            const {data} = await this.$http.get('api/getcomments/' + this.id + "?pageindex=" + this.pageIndex );
+            if( data.status === 0 ){
+                // console.log(result.body.methods);
+                this.commentList = this.commentList.concat(data.message);
+                // this.more_show = true;
+            }else{
+                Toast('加载评论失败！');  
+                // this.more_show = true;
+            }
         },
+
         //加载更多的评论
         getmoreInfo(){
             this.pageIndex++;
@@ -85,7 +97,7 @@ export default {
             setInterval( ()=>{ this.more_show = true;}, 1000 );
         },
         //发表评论
-        postComment(){
+        /* postComment(){
             //校验是否为空
             if( this.newcomment.trim().length === 0 ){
                 Toast('评论内容不能为空');
@@ -110,6 +122,25 @@ export default {
             })
 
              }
+        } */
+        async postComment(){
+            //校验是否为空
+            if( this.newcomment.trim().length === 0 ){
+                Toast('评论内容不能为空');
+                return;
+            }else{
+                const {res} = await this.$http.post( 'api/postcomment/' + this.id, { content:this.newcomment.trim() });
+                if(res.status === 0){
+                    Toast('发表评论成功');
+                    //拼接出一个评论对象
+                    var cmt = { user_name:'匿名用户', add_time: Date.now(), content: this.newcomment };
+                    this.commentList.unshift(cmt);
+                    this.show = false;
+                    this.newcomment = "";
+                }else{
+                    Toast('发表评论失败');
+                }
+            }
         }
     },
 

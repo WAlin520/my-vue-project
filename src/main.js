@@ -33,13 +33,21 @@ import './lib/mui/css/icons-extra.css'
 
 
 
-
 //导入vue-resource模块
-import vueResource from 'vue-resource'
+/* import vueResource from 'vue-resource'
 Vue.use(vueResource)
 //全局配置：请求的根路径，提交表单的格式
 Vue.http.options.root = 'http://www.liulongbin.top:3005'
-Vue.http.options.emulateJSON = true
+Vue.http.options.emulateJSON = true */
+
+
+//引入axios模块
+import axios from 'axios'
+Vue.prototype.$http = axios.create({
+  baseURL: 'http://www.liulongbin.top:3005'
+})
+
+
 
 
 //导入格式化时间的插件

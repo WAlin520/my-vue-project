@@ -80,7 +80,8 @@ export default {
     },
     methods:{
         //获取评论列表
-        getNewsInfo(){
+        //下面是vue-resource请求，后面改成axios
+    /*    getNewsInfo(){
             this.$http.get('api/getcomments/' + this.id + "?pageindex=" + this.pageIndex )
             .then( result => {
                 if( result.body.status === 0 ){
@@ -91,8 +92,19 @@ export default {
                     Toast('加载评论失败！');  
                     // this.more_show = true;
                 }
-            })
+            }) 
+        },*/
+        async getNewsInfo(){
+            const {data} = await this.$http.get('api/getcomments/' + this.id + "?pageindex=" + this.pageIndex);
+            // console.log(data);
+            if( data.status === 0 ){
+                this.commentList = this.commentList.concat(data.message);
+            }else{
+                Toast('加载评论失败！');
+            }
         },
+
+
         //加载更多的评论
         getmoreInfo(){
             this.pageIndex++;
@@ -101,8 +113,9 @@ export default {
             setInterval( ()=>{ this.more_show = true;}, 1000 );
         },
         //发表评论
-        postComment(){
+      /*   postComment(){
             //校验是否为空
+            //trim() 方法用于删除字符串的头尾空格。trim() 方法不会改变原始字符串。
             if( this.newcomment.trim().length === 0 ){
                 Toast('评论内容不能为空');
                 return;
@@ -124,6 +137,25 @@ export default {
                         Toast('发表评论失败');
                     }
                 })
+            } 
+        },*/
+        async postComment(){
+            if( this.newcomment.trim().length === 0 ){
+                Toast('评论内容不能为空');
+                return;
+            }else{
+                const {data} = await this.$http.post( 'api/postcomment/' + this.id, { content:this.newcomment.trim() });
+                // console.log(data);
+                if(data.status === 0){
+                    Toast('发表评论成功');
+                    //拼接出一个评论对象
+                    var cmt = { user_name:'匿名用户', add_time: Date.now(), content: this.newcomment };
+                    this.commentList.unshift(cmt);
+                    this.show = false;
+                        this.newcomment = "";
+                }else{
+                    Toast('发表评论失败');
+                }
             }
         },
         quitComment(){

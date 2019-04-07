@@ -66,7 +66,7 @@ export default {
         this.getGoodsList();
     },
     methods: {
-      getGoodsList(){
+      async getGoodsList(){
         //获取store中所有商品的id，然后拼接处一个用逗号分隔的字符串
         var idArr = [];
         this.$store.state.cart.forEach(item => {
@@ -76,12 +76,11 @@ export default {
         if( idArr.length <= 0 ){
             return;
           }
-        this.$http.get('api/goods/getshopcarlist/'+ idArr.join(",")).then(result => {
-            if(result.body.status === 0){
-              this.goodslist = result.body.message;
-              // console.log(this.goodslist);
-            }
-        })        
+        const {data} = await this.$http.get('api/goods/getshopcarlist/'+ idArr.join(","));
+          if(data.status === 0){
+            this.goodslist = data.message;
+            // console.log(this.goodslist);
+          }      
       },
       del(id, index){
         //点击删除吧商品从store中根据数据传递的id删除，同时，把当前组件中的goodlist中对应删除的那个商品，使用index删除

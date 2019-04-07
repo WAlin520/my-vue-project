@@ -60,23 +60,39 @@ export default {
         });   
     },
     methods:{
-        getAllCategory(){
+        /* getAllCategory(){
             this.$http.get('api/getimgcategory').then( result => {
-                if(result.body.status === 0){
-                     result.body.message.unshift({title:"全部", id:0});
+                if(result.data.status === 0){
+                     result.data.message.unshift({title:"全部", id:0});
                     //  console.log(result.body.message);
-                     this.Categorys = result.body.message;
+                     this.Categorys = result.data.message;
                 } else {
                     Toast('图片分类加载失败！');
                 }
             })
-        },
-        getPhotoList(cateId){
+        }, */
+        async getAllCategory(){
+            const {data} = await this.$http.get('api/getimgcategory');
+            if(data.status === 0){
+                data.message.unshift({title:"全部", id:0});
+                this.Categorys = data.message;
+            } else {
+                Toast('图片分类加载失败！');
+            }
+    },
+
+        /* getPhotoList(cateId){
             this.$http.get('api/getimages/'+ cateId).then( result => {
-                if(result.body.status === 0){
-                    this.photoList = result.body.message;
+                if(result.data.status === 0){
+                    this.photoList = result.data.message;
                 }
-                })
+            })
+        } */
+        async getPhotoList(cateId){
+            const {data} = await this.$http.get('api/getimages/'+ cateId);
+            if(data.status === 0){
+                this.photoList = data.message;
+            }
         }
     },
 }

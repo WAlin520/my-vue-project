@@ -66,8 +66,8 @@ export default {
     }
   },
   methods:{
-    getLunbotu(){  //获取轮播图数据的方法
-      // console.log("lunbotu");
+    //以下是使用vue-resource进行异步请求，后面更新为axios异步请求
+    /* getLunbotu(){  //获取轮播图数据的方法
       // this.$http.get('http://www.liulongbin.top:3005/api/getlunbo').then( result => {  
       this.$http.get('api/getlunbo').then( result => {
         // console.log(result.body);
@@ -78,6 +78,14 @@ export default {
           Toast("轮播图加载失败");
           }
       })
+    } */
+    async getLunbotu(){
+      const {data} = await this.$http.get('api/getlunbo'); //ES6语法解构赋值
+      if (data.status === 0){
+        this.lunbotuList = data.message;
+      }else{
+        Toast("轮播图加载失败");
+      }
     }
   },
   created(){
@@ -94,7 +102,7 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="less" scoped>
 
-//轮播图整个container的样式
+// 轮播图整个container的样式
 // .mint-swipe{
 //   height: 150px;
 // }
@@ -146,10 +154,5 @@ export default {
    font-size: 14px
  }
  }
-
-
-
-
-
 
 </style>

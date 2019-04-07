@@ -36,7 +36,8 @@ export default {
         this.getNewsList();
     },
     methods:{
-        getNewsList(){
+        //以下是vue-resource异步请求
+/*         getNewsList(){
             this.$http.get('http://www.liulongbin.top:3005/api/getnewslist').then(
                 function(result){
                     // console.log(result.body);
@@ -47,6 +48,15 @@ export default {
                     }
                 }
             )
+        } */
+        //以下是ES7的async函数
+        async getNewsList(){
+            const {data} = await this.$http.get('http://www.liulongbin.top:3005/api/getnewslist');
+            if( data.status === 0 ){
+                        this.newsList = data.message;
+                    } else{
+                        Toast('新闻资讯加载失败');
+                    }
         }
     }
 }

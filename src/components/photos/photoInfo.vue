@@ -47,16 +47,23 @@ export default {
         this.getPhotoThumb();
     },
     methods:{
-        getPhotoInfo(){
+       /*  getPhotoInfo(){
             this.$http.get( 'api/getimageInfo/'+this.id ).then(result => {
                 if(result.body.status === 0){
                     // console.log(result.body.message);
                     this.photoInfo = result.body.message[0];
                 }
-            })
+            }) 
+        },*/
+        async getPhotoInfo(){
+            const {data} = await this.$http.get( 'api/getimageInfo/'+this.id );
+            if(data.status === 0){
+                this.photoInfo = data.message[0];
+            }
         },
+
         //获取缩略图
-        getPhotoThumb(){
+        /* getPhotoThumb(){
             this.$http.get('api/getthumimages/'+this.id).then(
                 result => {
                     if( result.body.status ===0 ){
@@ -70,7 +77,20 @@ export default {
                     }
                   
                 })
+        }, */
+        async getPhotoThumb(){
+            const {data} = await this.$http.get('api/getthumimages/'+this.id);
+            // console.log(data);
+            if( data.status === 0 ){
+                data.message.forEach(element => {
+                    element.w = 600;
+                    element.h = 600;
+                    element.msrc = element.src;
+                });
+            this.ThumbPhotoList = data.message;
+            }
         },
+
         //vue-preview官网
         handleClose () {
         // console.log('close event')

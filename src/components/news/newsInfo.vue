@@ -41,7 +41,7 @@ export default {
         this.getNewsInfo();
     },
     methods:{
-        getNewsInfo(){
+        /* getNewsInfo(){
             this.$http.get('api/getnew/'+this.id).then( result => {
                 // console.log(result.body);
                 if(result.body.status === 0){
@@ -50,6 +50,15 @@ export default {
                     Toast('新闻资讯加载失败。。。');
                 }
             } )
+        } */
+        async getNewsInfo(){
+            const {data} = await this.$http.get('api/getnew/'+this.id);
+            // console.log(data);
+            if(data.status === 0){
+                   this.newsInfo = data.message[0]; //message是一个数组
+                }else{
+                    Toast('新闻资讯加载失败。。。');
+                }
         }
     },
     // router,

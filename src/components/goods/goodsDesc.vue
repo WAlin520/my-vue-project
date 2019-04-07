@@ -23,7 +23,7 @@ export default {
   },
 
   methods: {
-    getGoodsDesc(){
+    /* getGoodsDesc(){
         this.$http.get("api/goods/getdesc/" + this.id).then(result =>{
             if (result.body.status === 0) {
                 // console.log(result.body.message);
@@ -33,6 +33,14 @@ export default {
                 Toast("图文详情加载失败！")
             }
         })
+    } */
+    async getGoodsDesc(){
+        const {data} = await this.$http.get("api/goods/getdesc/" + this.id);
+        if (data.status === 0) {
+            this.info = data.message[0];
+        }else{
+            Toast("图文详情加载失败！")
+        }
     }
   },
 

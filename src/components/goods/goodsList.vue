@@ -46,7 +46,7 @@
         </button>
         <button type="button" class="mui-btn mui-btn-outlined mui-btn-primary mui-disabled" 
         disabled="" style='width:100%' v-else="more_show"><span class="mui-spinner" :key="'loading'">
-            </span>&nbsp;<span>Loading...</span>
+            </span>&nbsp;<span>Loading...</span> 
             </button>
         </transition>
 
@@ -70,7 +70,7 @@ export default {
         this.getGoodsList();
     },
     methods:{
-        getGoodsList(){
+        /* getGoodsList(){
             this.$http.get('api/getgoods?pageindex='+this.pageIndex).then(
                 result => {
                     if(result.body.status === 0){
@@ -83,7 +83,19 @@ export default {
                         this.more_show = true;
                     }
                 })
+        }, */
+        async getGoodsList(){
+            const {data} = await this.$http.get('api/getgoods?pageindex='+this.pageIndex);
+            if(data.status === 0){
+                this.goodsList = this.goodsList.concat(data.message);
+                this.more_show = true;
+
+            }else{
+                Toast("加载商品列表失败！");
+                this.more_show = true;
+            }
         },
+
         getmoreList(){
             this.pageIndex++;
             this.more_show = false;
