@@ -16,27 +16,29 @@ import Router from 'vue-router'
 // import contact from '@/components/contact/contact'
 // import LoadingComponent from '@/components/loadComponent/loadComponent'
 
-//构造一个懒加载组件的生成器
-function creatComponentToLoading(compon, url){
-  // return Vue.component(compon, () => ({
-    // 需要加载的组件 (应该是一个 `Promise` 对象)
-  //   component: import(url),
-  //   // 异步组件加载时使用的组件
-  //   loading: LoadingComponent,
-  //   // 加载失败时使用的组件
-  //   // error: ErrorComponent,
-  //   // 展示加载时组件的延时时间。默认值是 200 (毫秒)
-  //   delay: 200,
-  //   // 如果提供了超时时间且组件加载也超时了，
-  //   // 则使用加载失败时使用的组件。默认值是：`Infinity`
-  //   timeout: 3000
-  // }))
-//下面可以用，但是没有等待加载时的组件
+
+//懒加载组件
+/* function creatComponentToLoading(compon, url){
+  //这种用不了
+  return Vue.component(compon, () => ({
+    需要加载的组件 (应该是一个 `Promise` 对象)
+    component: import(url),
+    // 异步组件加载时使用的组件
+    loading: LoadingComponent,
+    // 加载失败时使用的组件
+    // error: ErrorComponent,
+    // 展示加载时组件的延时时间。默认值是 200 (毫秒)
+    delay: 200,
+    // 如果提供了超时时间且组件加载也超时了，
+    // 则使用加载失败时使用的组件。默认值是：`Infinity`
+    timeout: 3000
+  }))
+//下面可以用，但是添加不了等待加载时的组件
   return Vue.component(compon, function(resolve){
     require(['@/components/news/newslist'], resolve)
   })
 }
-// const newslist = creatComponentToLoading('newslist','@/components/news/newslist');
+const newslist = creatComponentToLoading('newslist','@/components/news/newslist'); */
 //另一种方式
 // const home = () => import('@/components/tabbar/home');
 const LoadingComponent = () => ({
@@ -141,6 +143,7 @@ const contact = () => ({
 Vue.use(Router)
 
 export default new Router({
+  mode: 'history',
   routes: [
     { path: '/', redirect:'/home' },
     { path:'/loading',  name:'', component: LoadingComponent},
