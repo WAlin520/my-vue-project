@@ -80,11 +80,16 @@ export default {
       })
     } */
     async getLunbotu(){
-      const {data} = await this.$http.get('api/getlunbo'); //ES6语法解构赋值
+      // const {data} = await this.$http.get('api/getlunbo'); //ES6语法解构赋值
+      // const {data} = await this.$http.get('http://localhost:8090/api/getlunbo'); //ES6语法解构赋值
+      const {data} = await this.$http.get('http://122.51.205.63:8090/api/getlunbo');
+
       if (data.status === 0){
         this.lunbotuList = data.message;
+        // console.log(data);
       }else{
         Toast("轮播图加载失败");
+        // console.log(data);
       }
     }
   },
